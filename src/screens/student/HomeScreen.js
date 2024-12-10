@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React, { useState } from 'react';
 import {
   View,
@@ -41,6 +35,8 @@ export default function HomeScreen({ navigation }) {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
 const backgroundImage =require('../../../assets/backgound.png')
   const handleAddCategory = () => {
     if (newCategory.trim() === '') {
@@ -67,31 +63,55 @@ const backgroundImage =require('../../../assets/backgound.png')
     selectedCategories.length === 0 || selectedCategories.includes(mentor.category)
   );
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filteredResults = mentors.filter(
+      (mentor) =>
+        mentor.name.toLowerCase().includes(query.toLowerCase()) ||
+        mentor.category.toLowerCase().includes(query.toLowerCase())
+    );
+    filteredMentors=filteredResults
+  };
+  const categoryIcons = {
+
+    Technology: require('../../../assets/technology.png'),
+    Math: require('../../../assets/math.png'),
+    Science: require('../../../assets/science.png'),
+    electronics: require('../../../assets/circuit.png'),
+
+
+
+
+    // Add more categories and their respective icons here
+  };
   const renderCategoryTag = ({ item }) => (
     <TouchableOpacity
       style={[
         styles.cardCat,
         {
-          backgroundColor: selectedCategories.includes(item) ? '#95d100' : '#f2f0f3',
+          backgroundColor: selectedCategories.includes(item) ? '#ebd181' : '#f2f0f3',
           borderColor: selectedCategories.includes(item) ? '#7D6E91' : '#e0e0e0',
         },
       ]}
       onPress={() => handleToggleCategory(item)}
     >
-      <Image
-        source={require(`../../../assets/loupe.png`)} // Update with actual icon file paths
-        style={styles.cardIcon}
-      />
+      {categoryIcons[item] && (
+        <Image
+          source={categoryIcons[item]} // Use the mapped icon
+          style={styles.cardIcon}
+        />
+      )}
       <Text
         style={[
           styles.cardText,
-          { color: selectedCategories.includes(item) ? '#FFF' : '#3f1e93' },
+          { color: selectedCategories.includes(item) ? '#FFF' : '#59426A' },
         ]}
       >
         {item}
       </Text>
     </TouchableOpacity>
   );
+    
   
 
   const renderMentorCard = ({ item }) => (
@@ -112,18 +132,17 @@ const backgroundImage =require('../../../assets/backgound.png')
   imageStyle={styles.imageStyle} // Add this for ImageBackground-specific styling
 >
   <View style={styles.containerSearch}>
-  <Text style={styles.title}>Welcome Back !</Text>
+  <Text style={styles.titleSub}>Welcome Back !</Text>
     <Text style={styles.title}>What do you want to learn about today?</Text>
 
     {/* Add Category */}
     <View  style={styles.search}>
-      <TextInput
-       
-        placeholder="Add a category"
-        value={newCategory}
-        onChangeText={setNewCategory}
-        placeholderTextColor="#6f6d72"
-      />
+    <TextInput
+          style={styles.searchInput}
+          placeholder="Search sessions..."
+          value={searchQuery}
+          onChangeText={handleSearch}
+        />
       <TouchableOpacity style={styles.addButton} onPress={handleAddCategory}>
       <Image
     source={require('../../../assets/loupe.png')} // Update the path based on your folder structure
@@ -169,22 +188,26 @@ const backgroundImage =require('../../../assets/backgound.png')
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
+height:250,
+
+    resizeMode:'center',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
-    overflow: 'hidden', // Ensure content respects the border radius
+    alignContent:'center',
+    alignItems:'center',
+    justifyContent:'center'
+   
   },
   imageStyle: {
     borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40, // Match the radius to the parent
+    borderBottomRightRadius: 40,// Match the radius to the parent
+   
   },
   containerSearch: {
 
     justifyContent: 'center',
-    marginBottom: 10,
-    padding: 10,
-    flex: 1,
+  
+  
   },
   inputContainer: {
     flexDirection: 'row',
@@ -227,12 +250,16 @@ borderColor:'#9c87ad',
     flex: 2,
   padding:20,
     backgroundColor: '#F5F5F5',
-  },
-  title: {
-    fontSize: 16,
+  },titleSub:{ fontSize: 20,
     fontWeight: '200',
-    fontFamily:'Poppins',
     color: '#c5c9c0',
+    textAlign: 'left',
+    marginBottom: 15,},
+  title: {
+    fontSize: 25,
+    fontWeight: '400',
+    fontFamily:'Poppins',
+    color: '#ffffff',
     textAlign: 'left',
     marginBottom: 15,
   },
@@ -251,7 +278,7 @@ borderColor:'#9c87ad',
   },
  tagContainer: {
     justifyContent: 'space-between',
-    backgroundColor:'red',
+    
 alignContent:'center',
 alignItems:'flex-start',
 alignSelf:'flex-start',

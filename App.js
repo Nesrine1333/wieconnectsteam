@@ -45,6 +45,7 @@ export default function App() {
             name="MentorSessionDetails"
             component={MentorSessionDetails}
           />
+
         </Stack.Navigator>
       </NavigationContainer>
     </View>

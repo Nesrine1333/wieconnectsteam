@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 const LoginScreen = ({ navigation}) => {
   const [email, setEmail] = useState('');
@@ -11,7 +13,7 @@ const LoginScreen = ({ navigation}) => {
 
 
 
-
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     // Simulate user roles based on email
@@ -23,6 +25,8 @@ const LoginScreen = ({ navigation}) => {
     } else {
       userRole = 'student';
     }
+
+
 
     console.log(`Logged in as: ${userRole}`); // For testing
 
@@ -37,7 +41,20 @@ const LoginScreen = ({ navigation}) => {
 
       {/* Login Form */}
       <View style={styles.container}>
-        <Image source={require('../../assets/wie_essths.png')} style={styles.logo} />
+      <View style={styles.logoContainer}>
+      <Image source={require('../../assets/logo.png')} style={styles.logo} />
+
+      </View>
+
+
+
+
+
+
+
+
+
+      
         <Text style={styles.title}>Welcome Back</Text>
         <TextInput
           style={styles.input}
@@ -46,18 +63,31 @@ const LoginScreen = ({ navigation}) => {
           value={email}
           onChangeText={setEmail}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+        <View style={styles.passwordContainer}>
+          <TextInput
+       
+            placeholder="Password"
+            placeholderTextColor="#999"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <MaterialIcons
+              name={showPassword ? 'visibility' : 'visibility-off'}
+              size={20}
+              color="#555"
+            />
+          </TouchableOpacity>
+        </View>
+
        <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('signup')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.link}>Don’t have an account? Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -73,42 +103,54 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    marginTop:40
   },
   container: {
     width: '90%',
     backgroundColor: 'rgba(255, 255, 255, 0.9)', // Slightly transparent white for contrast
     borderRadius: 12,
     padding: 20,
-    alignItems: 'center',
+    justifyContent:'center',
+    alignItems:'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
+  },logoContainer:{
+width:'100%',
+height:'25%',
+
+    alignContent:'center',
+    justifyContent:'center',
+    alignItems:'center',
+marginBottom:20
+  
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+  
+
+   width:120,
+   height:120
+
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#7D6E91',
+    fontSize: 20,
+    fontWeight: '300',
+    color: '#e8a359',
+    marginBottom: 20,
+  },input: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    width: '90%',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 15,
     marginBottom: 20,
   },
-  input: {
-    width: '100%',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#7D6E91',
-    borderRadius: 8,
-    marginBottom: 15,
-    backgroundColor: '#F5F5F5',
-  },
   button: {
-    backgroundColor: '#7D6E91',
+    backgroundColor: '#60497d',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 15,
     width: '100%',
     alignItems: 'center',
     marginBottom: 10,
@@ -141,7 +183,35 @@ const styles = StyleSheet.create({
     bottom: -60,
     right: -60,
     opacity: 0.5,
+  }, passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: '#FFFFFF',
+justifyContent:'space-between',
+    borderRadius: 8,
+    width: '90%',
+    marginBottom: 20,
+    padding: 5,
   },
+  eyeIcon: {
+    padding: 10,
+  },
+  button: {
+    backgroundColor: '#7D6E91',
+    padding: 15,
+    borderRadius: 8,
+    width: '80%',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#e5e7da',
+    fontWeight: '400',
+    letterSpacing:5
+  },
+  
 });
 
 export default LoginScreen;

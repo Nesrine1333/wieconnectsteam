@@ -74,7 +74,7 @@ export default function BookingFormScreen({ navigation }) {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIcon}>
-          <Icon name="arrow-back" size={24} color={colors.textDark} />
+          <Icon name="arrow-back" size={24} color={colors.textLight} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Booking</Text>
       </View>
@@ -136,7 +136,7 @@ export default function BookingFormScreen({ navigation }) {
           <View style={styles.fieldContainer}>
             <Text style={styles.label}>Hours</Text>
             <View style={styles.timeTagContainer}>
-              {['10:00', '12:00', '14:00', '16:00'].map((timeSlot) => (
+              {['10:00', '11:00', '12:00','13:00','14:00','15:00', '16:00'].map((timeSlot) => (
                 <TouchableOpacity
                   key={timeSlot}
                   style={[styles.timeTag, time === timeSlot && styles.selectedTimeTag]}
@@ -173,27 +173,27 @@ picker: {
 },
   backgroundContainer: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor:'#59426A',
     marginTop: 50,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: colors.background,
+backgroundColor:'#59426A',
   },
   headerIcon: {
     marginRight: 15,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.textDark,
+    fontWeight: '300',
+    color: colors.textLight,
   },
   container: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: colors.background,
+  backgroundColor:'#59426A',
   },
   formContainer: {
  
@@ -201,14 +201,13 @@ picker: {
     // Background color
    borderTopLeftRadius: 40, // Top-left corner
    borderTopRightRadius: 40, 
-   
-   shadowColor: '#000',
-   shadowOpacity: 0.9,
+   shadowColor: '#fc730a',
+   shadowOpacity: 1,
    shadowRadius: 5,
-   elevation: 5,
+   elevation:10,
   
    justifyContent:'space-between',
-    backgroundColor: '#f9f9f9',
+   backgroundColor:'#efebe8',
  
     padding: 20,
     flex: 1,
@@ -258,6 +257,7 @@ picker: {
     fontSize: 18,
     color: colors.textDark,
     marginBottom: 10,
+    fontWeight:'400'
   },
   input: {
     width: '100%',
@@ -272,17 +272,22 @@ picker: {
   },
   dateButton: {
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
+    justifyContent:'center',
     marginHorizontal: 5,
     borderRadius: 10,
     backgroundColor: '#eee',
+    borderWidth:1,
+    height:60,
+    borderColor:'#e4d9b4',
   },
   selectedDateButton: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgrnButton,
   },
   dateNumber: {
-    fontSize: 24,
+    fontSize: 20,
     color: colors.textDark,
+
   },
   dateDay: {
     fontSize: 14,
@@ -296,9 +301,11 @@ picker: {
     flexWrap: 'wrap',
   },
   timeTag: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#eee',
     borderRadius: 15,
     paddingVertical: 8,
+    borderWidth:1,
+    borderColor:'#e4d9b4',
     paddingHorizontal: 15,
     margin: 5,
   },

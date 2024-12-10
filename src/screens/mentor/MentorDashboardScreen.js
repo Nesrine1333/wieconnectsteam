@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet,Image } from 'react-native';
 import colors from '../../styles/colors';
 import FooterMentor from '../../components/FooteMentor';
 import MentorSessionDetails from '../mentor/SessionInfo'; // Import the modal component
@@ -26,6 +26,8 @@ const MentorDashboardScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+        <View style={styles.circlePattern}></View>
+        <View style={styles.circlePattern2}></View>
       <View style={styles.containerList}>
         <Text style={styles.title}>Upcoming Bookings</Text>
 
@@ -42,33 +44,54 @@ const MentorDashboardScreen = ({ navigation }) => {
                 </Text>
               </View>
 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleAcceptBooking(item)} // Open modal on button click
-              >
-                <Text style={styles.buttonText}>Accept</Text>
-              </TouchableOpacity>
+               <TouchableOpacity
+      style={styles.footerButton}
+      onPress={() => handleAcceptBooking(item)}
+    >
+      <Image
+        source={require('../../../assets/popup.png')} // Replace with your icon path
+        style={styles.buttonText}
+      />
+    </TouchableOpacity>
             </View>
           )}
         />
       </View>
 
-
       {/* MentorSessionDetails Modal */}
       {modalVisible && (
         <MentorSessionDetails
-          route={{ params: { booking: selectedBooking } }} // Pass the selected booking
-          navigation={navigation}
-          setModalVisible={closeModal} // Close modal on action
+          booking={selectedBooking}
+          setModalVisible={setModalVisible}
         />
       )}
-      <FooterMentor navigation={navigation} activeTab="MentorDashboard" />
 
+      <FooterMentor navigation={navigation} activeTab="MentorDashboard" />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  circlePattern: {
+    width: 150,
+    height: 150,
+    backgroundColor: '#59426A',
+    borderRadius: 75,
+    position: 'absolute',
+    top: -50,
+    left: -50,
+    opacity: 0.6,
+  },
+  circlePattern2: {
+    width: 200,
+    height: 200,
+    backgroundColor: '#7D6E91',
+    borderRadius: 100,
+    position: 'absolute',
+    bottom: -60,
+    right: -60,
+    opacity: 0.5,
+  },
   footer: {
     flexDirection: 'row',
     backgroundColor: '#59426A',
@@ -85,35 +108,35 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     justifyContent: 'flex-start',
+    padding:20,
+    backgroundColor:'grey',
+    flex:1,
+    borderTopRightRadius:12,
+    borderTopLeftRadius:12
   },
   containerList: {
     marginTop: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
-    backgroundColor: '#a61a1a0',
-    justifyContent: 'center',
-    flexDirection: 'column',
+    alignItems: 'center',
   },
   container: { flex: 1, backgroundColor: colors.background },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '200',
     marginBottom: 10,
-    backgroundColor: '#e6e6e600',
-    color: colors.primary,
+    color: colors.textDark,
+    textAlign:'left'
   },
   card: {
     width: '100%',
     flexDirection: 'row',
-    textAlign: 'center',
-    gap: 3,
     backgroundColor: colors.textLight,
     padding: 15,
     marginVertical: 8,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#cdd7c1',
+    justifyContent: 'space-between',
   },
   details: {
     color: colors.textDark,
@@ -122,12 +145,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     padding: 10,
     borderRadius: 8,
-    alignItems: 'center',
-    textAlign: 'center',
   },
   buttonText: {
-    color: colors.textLight,
-    fontWeight: 'bold',
+   width:20,
+   height:20
   },
 });
 
